@@ -25,7 +25,7 @@ public class FilmController {
     }
 
     @PostMapping
-    public ResponseEntity<Film> createFilm(@Valid @RequestBody Film film) {
+    public ResponseEntity<Film> createNewFilm(@Valid @RequestBody Film film) {
         if (film.getReleaseDate().isAfter(moviesBirthday)) {
             film.setId(generatorId.generateId());
             films.put(film.getId(), film);
