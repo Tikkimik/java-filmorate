@@ -1,7 +1,7 @@
 package ru.yandex.practicum.filmorate.model;
 
 public class GeneratorId {
-    long id;
+    private long id;
 
     public GeneratorId() {
         this.id = 1;

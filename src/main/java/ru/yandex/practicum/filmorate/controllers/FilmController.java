@@ -9,28 +9,26 @@ import ru.yandex.practicum.filmorate.model.GeneratorId;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Slf4j
 @RestController
 @RequestMapping("/films")
 public class FilmController {
-    private final List<Film> films = new ArrayList<>();
+    private final Map<Long, Film> films = new HashMap<>();
     private final GeneratorId generatorId = new GeneratorId();
     private final LocalDate moviesBirthday= LocalDate.of(1895, 12, 28);
-    //28 декабря 1895 года считается днём рождения кино.
 
     @GetMapping
-    public List<Film> getFilms() {
-        return films;
+    public Collection<Film> getFilms() {
+        return films.values();
     }
 
     @PostMapping
     public ResponseEntity<Film> createFilm(@Valid @RequestBody Film film) {
         if (film.getReleaseDate().isAfter(moviesBirthday)) {
             film.setId(generatorId.generateId());
-            films.add(film);
+            films.put(film.getId(), film);
             return ResponseEntity.status(HttpStatus.OK).body(film);
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(film);
@@ -38,8 +36,12 @@ public class FilmController {
     }
 
     @PutMapping
-    public Film updateFilm(@Valid @RequestBody Film film) {
-        films.set(Math.toIntExact(film.getId()-1), film);
-        return film;
+    public ResponseEntity<Film> updateFilm(@Valid @RequestBody Film film) {
+        if (films.containsKey(film.getId())) {
+            films.put(film.getId(), film);
+            return ResponseEntity.status(HttpStatus.OK).body(film);
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(film);
+        }
     }
 }
