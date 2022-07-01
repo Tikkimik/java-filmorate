@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
-public class FilmService {              //сюда я положил валидацию и айдишники
+public class FilmService {                               //сюда я положил валидацию и айдишники
 
     private final GeneratorId generatorId = new GeneratorId();
     private final LocalDate moviesBirthday= LocalDate.of(1895, 12, 28);

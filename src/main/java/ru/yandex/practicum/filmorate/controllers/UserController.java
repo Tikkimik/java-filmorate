@@ -1,43 +1,35 @@
 package ru.yandex.practicum.filmorate.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.yandex.practicum.filmorate.model.Film;
-import ru.yandex.practicum.filmorate.model.GeneratorId;
 import ru.yandex.practicum.filmorate.model.User;
+import ru.yandex.practicum.filmorate.service.UserService;
 
 import javax.validation.Valid;
-import java.util.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    private final Map<Long, User> users = new HashMap<>();
-    private final GeneratorId userIdGenerator = new GeneratorId();
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping
-    public Collection<User> getUsers() {
-        return users.values();
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> users = userService.getAllUsers();
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @PostMapping
-    public User createNewUser(@Valid @RequestBody User user) {
-        if (user.getName().isEmpty()) {
-            user.setName(user.getLogin());
-        }
-        user.setId(userIdGenerator.generateId());
-        users.put(user.getId(), user);
-        return user;
+    public ResponseEntity<User> createNewUser(@Valid @RequestBody User user) {
+        return userService.addUser(user);
     }
 
     @PutMapping
     public ResponseEntity<User> updateUser(@Valid @RequestBody User user) {
-        if (users.containsKey(user.getId())) {
-            users.put(user.getId(), user);
-            return ResponseEntity.status(HttpStatus.OK).body(user);
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(user);
-        }
+        return userService.updateUser(user);
     }
 }

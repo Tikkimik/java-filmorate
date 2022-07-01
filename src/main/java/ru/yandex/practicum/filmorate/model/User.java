@@ -31,4 +31,7 @@ public class User {
         this.name = name;
         this.birthday = birthday;
     }
+
+    public User(String s, String login_login, LocalDate of) {
+    }
 }
