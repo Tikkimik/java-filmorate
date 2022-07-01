@@ -7,8 +7,8 @@ import javax.validation.constraints.*;
 @lombok.Data
 public class Film {
     private Long id;
-    @NonNull @NotEmpty private String name;
-    @NonNull @Size(max = 200) private String description;
-    @NonNull @PastOrPresent private LocalDate releaseDate;
-    @NonNull @Positive private Long duration;
+    @NotEmpty private String name;
+    @Size(max = 200) private String description;
+    @PastOrPresent private LocalDate releaseDate;
+    @Positive private Long duration;
 }
