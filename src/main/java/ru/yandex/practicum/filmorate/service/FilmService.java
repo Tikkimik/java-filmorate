@@ -13,12 +13,14 @@ import java.util.List;
 
 @Service
 public class FilmService {                               //сюда я положил валидацию и айдишники
-
+    private final FilmsDao filmDao;
     private final GeneratorId generatorId = new GeneratorId();
     private final LocalDate moviesBirthday= LocalDate.of(1895, 12, 28);
 
     @Autowired
-    private FilmsDao filmDao;
+    public FilmService(FilmsDao filmDao) {
+        this.filmDao = filmDao;
+    }
 
     public List<Film> getAll() {
         return filmDao.getAll();

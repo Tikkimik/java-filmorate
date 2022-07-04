@@ -12,11 +12,13 @@ import java.util.List;
 
 @Service
 public class UserService {
-
+    private final UsersDao userDao;
     private final GeneratorId generatorId = new GeneratorId();
 
     @Autowired
-    private UsersDao userDao;
+    public UserService(UsersDao userDao) {
+        this.userDao = userDao;
+    }
 
     public List<User> getAllUsers() {
         return userDao.getAll();
