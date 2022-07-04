@@ -15,9 +15,12 @@ import java.util.*;
 @RestController
 @RequestMapping("/films")
 public class FilmController {
+    private final  FilmService filmService;
 
     @Autowired
-    private FilmService filmService;
+    public FilmController(FilmService filmService) {
+        this.filmService = filmService;
+    }
 
     @GetMapping
     public ResponseEntity<List<Film>> getAllFilms() {
