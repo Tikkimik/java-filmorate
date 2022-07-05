@@ -3,6 +3,8 @@ package ru.yandex.practicum.filmorate.model;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import lombok.Data;
 
@@ -15,7 +17,7 @@ public class User {
     @NotBlank private String login;
     private String name;
     @Past private LocalDate birthday;
-    private HashSet<Long> friendList;
+    private Set<Long> friendList = new TreeSet<>(); //тут я не понял почему нельзя сделать сразу трисет <лонг> выдает нулпоинтерексепшн
 
     public User() {
     }

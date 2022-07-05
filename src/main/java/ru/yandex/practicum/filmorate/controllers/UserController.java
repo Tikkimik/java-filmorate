@@ -10,6 +10,7 @@ import ru.yandex.practicum.filmorate.service.UserService;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/users")
@@ -41,4 +42,16 @@ public class UserController {
     public boolean addToFriendList(@PathVariable long id, @PathVariable long friendId) throws ValidationException {
         return userService.addToFriendList(id, friendId);
     }
+
+    @DeleteMapping("/{id}/friends/{friendId}")
+    public boolean deleteFriend(@PathVariable long id, @PathVariable long friendId) throws ValidationException {
+        return userService.removeFromFriendList(id, friendId);
+    }
+
+    @GetMapping("/{id}/friends")
+    public List<User> getListOfMutualFriends(@PathVariable long id, @PathVariable long friendId) throws ValidationException {
+        return userService.getListOfMutualFriends(id, friendId);
+    }
+
+
 }

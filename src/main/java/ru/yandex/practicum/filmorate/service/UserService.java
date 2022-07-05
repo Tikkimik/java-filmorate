@@ -9,7 +9,12 @@ import ru.yandex.practicum.filmorate.exceptions.ValidationException;
 import ru.yandex.practicum.filmorate.model.GeneratorId;
 import ru.yandex.practicum.filmorate.model.User;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class UserService {
@@ -58,16 +63,39 @@ public class UserService {
         } else {
             throw new ValidationException("неверно указан id пользователя");
         }
-
         return true;
     }
 
-    public void removeFromFriendList() {
-
+    public boolean removeFromFriendList(long userId, long friendId) throws ValidationException {
+        if(userDao.getUsers().containsKey(userId)) {
+            if (userDao.getUsers().containsKey(friendId)) {
+                userDao.getUsers().get(userId).getFriendList().remove(friendId);
+                userDao.getUsers().get(friendId).getFriendList().remove(userId);
+            } else {
+                throw new ValidationException("неверно указан id друга");
+            }
+        } else {
+            throw new ValidationException("неверно указан id пользователя");
+        }
+        return true;
     }
 
-    public void getListOfMutualFriends() {
-
+    public List<User> getListOfMutualFriends(long userId, long friendId) throws ValidationException {
+        if(userDao.getUsers().containsKey(userId)) {
+            if (userDao.getUsers().containsKey(friendId)) {
+                List<User> tmpList = new ArrayList<>();
+                for (Long id : userDao.getUsers().get(userId).getFriendList()) {
+                    if (userDao.getUsers().get(friendId).getFriendList().contains(id)) {
+                        tmpList.add(userDao.getUsers().get(id));
+                    }
+                }
+                return tmpList;
+            } else {
+                throw new ValidationException("неверно указан id друга");
+            }
+        } else {
+            throw new ValidationException("неверно указан id пользователя");
+        }
     }
 
 
