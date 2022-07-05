@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.dao.UsersDao;
+import ru.yandex.practicum.filmorate.exceptions.ValidationException;
 import ru.yandex.practicum.filmorate.model.GeneratorId;
 import ru.yandex.practicum.filmorate.model.User;
 
@@ -33,7 +34,7 @@ public class UserService {
             userDao.addUser(user);
             return new ResponseEntity<>(user, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(user, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(user, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -45,4 +46,29 @@ public class UserService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(user);
         }
     }
+
+    public boolean addToFriendList(long userId, long friendId) throws ValidationException {
+        if(userDao.getUsers().containsKey(userId)) {
+            if (userDao.getUsers().containsKey(friendId)) {
+                userDao.getUsers().get(userId).getFriendList().add(friendId);
+                userDao.getUsers().get(friendId).getFriendList().add(userId);
+            } else {
+                throw new ValidationException("неверно указан id друга");
+            }
+        } else {
+            throw new ValidationException("неверно указан id пользователя");
+        }
+
+        return true;
+    }
+
+    public void removeFromFriendList() {
+
+    }
+
+    public void getListOfMutualFriends() {
+
+    }
+
+
 }

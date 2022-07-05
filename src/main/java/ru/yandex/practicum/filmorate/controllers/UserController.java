@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.yandex.practicum.filmorate.exceptions.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.service.UserService;
 
@@ -34,5 +35,10 @@ public class UserController {
     @PutMapping
     public ResponseEntity<User> updateUser(@Valid @RequestBody User user) {
         return userService.updateUser(user);
+    }
+
+    @PutMapping("/{id}/friends/{friendId}")
+    public boolean addToFriendList(@PathVariable long id, @PathVariable long friendId) throws ValidationException {
+        return userService.addToFriendList(id, friendId);
     }
 }

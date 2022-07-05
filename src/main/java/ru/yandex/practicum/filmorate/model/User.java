@@ -1,18 +1,21 @@
 package ru.yandex.practicum.filmorate.model;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.List;
+
 import lombok.Data;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Past;
+
+import javax.validation.constraints.*;
 
 @Data
 public class User {
-    private Long id;
+    @Min(1) private Long id;
     @Email private String email;
     @NotBlank private String login;
     private String name;
     @Past private LocalDate birthday;
+    private HashSet<Long> friendList;
 
     public User() {
     }
@@ -30,8 +33,5 @@ public class User {
         this.login = login;
         this.name = name;
         this.birthday = birthday;
-    }
-
-    public User(String s, String login_login, LocalDate of) {
     }
 }

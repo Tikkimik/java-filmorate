@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
-public class UsersDao {
+public class UsersDao implements UserStorage {
     private final Map<Long, User> users = new HashMap<>();
 
     public Map<Long, User> getUsers() {

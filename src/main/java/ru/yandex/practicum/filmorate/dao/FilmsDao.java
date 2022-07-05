@@ -8,8 +8,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
-public class FilmsDao {         //https://www.kelltontech.com/kellton-tech-blog/spring-and-data-access-object-dao-part-1
-                                //тут я храню фильмы в мапе
+public class FilmsDao implements FilmStorage {         //https://www.kelltontech.com/kellton-tech-blog/spring-and-data-access-object-dao-part-1
+
     private final Map<Long, Film> films = new HashMap<>();
 
     public Map<Long, Film> getFilms() {
