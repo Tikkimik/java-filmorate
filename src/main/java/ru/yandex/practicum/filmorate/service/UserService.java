@@ -4,17 +4,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import ru.yandex.practicum.filmorate.dao.UsersDao;
+import ru.yandex.practicum.filmorate.exceptions.IncorrectParameterException;
+import ru.yandex.practicum.filmorate.exceptions.NotFoundException;
+import ru.yandex.practicum.filmorate.exceptions.UserNotFoundException;
 import ru.yandex.practicum.filmorate.exceptions.ValidationException;
 import ru.yandex.practicum.filmorate.model.GeneratorId;
 import ru.yandex.practicum.filmorate.model.User;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class UserService {
@@ -43,44 +44,44 @@ public class UserService {
         }
     }
 
-    public ResponseEntity<User> updateUser (User user) {
+    public User updateUser (User user) {
         if (userDao.getUsers().containsKey(user.getId())) {
             userDao.updateUser(user);
-            return ResponseEntity.status(HttpStatus.OK).body(user);
+            return user;
         } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(user);
+            throw new UserNotFoundException(String.format("Пользователь %s не найден", user));
         }
     }
 
-    public boolean addToFriendList(long userId, long friendId) throws ValidationException {
+    public boolean addToFriendList(long userId, long friendId) {
         if(userDao.getUsers().containsKey(userId)) {
             if (userDao.getUsers().containsKey(friendId)) {
                 userDao.getUsers().get(userId).getFriendList().add(friendId);
                 userDao.getUsers().get(friendId).getFriendList().add(userId);
             } else {
-                throw new ValidationException("неверно указан id друга");
+                throw new NotFoundException(String.format("Неверно указан идентификатор друга: %s", friendId));
             }
         } else {
-            throw new ValidationException("неверно указан id пользователя");
+            throw new NotFoundException(String.format("Пользователь с идентификатором %s не найден", userId));
         }
         return true;
     }
 
-    public boolean removeFromFriendList(long userId, long friendId) throws ValidationException {
+    public boolean removeFromFriendList(long userId, long friendId) {
         if(userDao.getUsers().containsKey(userId)) {
             if (userDao.getUsers().containsKey(friendId)) {
                 userDao.getUsers().get(userId).getFriendList().remove(friendId);
                 userDao.getUsers().get(friendId).getFriendList().remove(userId);
             } else {
-                throw new ValidationException("неверно указан id друга");
+                throw new IncorrectParameterException(String.format("неверно указан %s друга", friendId));
             }
         } else {
-            throw new ValidationException("неверно указан id пользователя");
+            throw new IncorrectParameterException(String.format("неверно указан %s пользователя", userId));
         }
         return true;
     }
 
-    public List<User> getListOfMutualFriends(long userId, long friendId) throws ValidationException {
+    public List<User> getListOfMutualFriends(long userId, long friendId) {
         if(userDao.getUsers().containsKey(userId)) {
             if (userDao.getUsers().containsKey(friendId)) {
                 List<User> tmpList = new ArrayList<>();
@@ -91,12 +92,29 @@ public class UserService {
                 }
                 return tmpList;
             } else {
-                throw new ValidationException("неверно указан id друга");
+                throw new IncorrectParameterException(String.format("неверно указан %s друга", friendId));
             }
         } else {
-            throw new ValidationException("неверно указан id пользователя");
+            throw new IncorrectParameterException(String.format("неверно указан %s пользователя", userId));
         }
     }
 
+    public User getUserById(@PathVariable long userId) {
+        if (userId <= 0) {
+            throw new UserNotFoundException(String.format("Пользователь %s не найден", userId));
+        }
+        return userDao.getUsers().get(userId);
+    }
 
+    public List<User> getFriendsList(long userId) {
+        ArrayList<User> friendListTmp = new ArrayList<>();
+        if(userDao.getUsers().containsKey(userId)) {
+            for (Long friendId : userDao.getFriendList(userDao.getUsers().get(userId))) {
+                friendListTmp.add(userDao.getUsers().get(friendId));
+            }
+        } else {
+            throw new UserNotFoundException(String.format("Пользователь %s не найден", userId));
+        }
+        return friendListTmp;
+    }
 }
