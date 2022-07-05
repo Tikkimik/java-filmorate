@@ -27,4 +27,12 @@ public class FilmsDao implements FilmStorage {         //https://www.kelltontech
     public void updateFilm(Film film) {
         films.put(film.getId(), film);
     }
+
+    public void likeTheMovie(Film film, long userId) {
+        film.getNumberOfLikes().add(userId);
+    }
+
+    public void removeLikeFromMovie(Film film, long userId) {
+        film.getNumberOfLikes().remove(userId);
+    }
 }
