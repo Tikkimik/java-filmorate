@@ -67,7 +67,7 @@ class FilmControllerTest {
         film.setName("");
         ResponseEntity<Film> result = restTemplate.postForEntity("http://localhost:" + port + "/films", film, Film.class);
         System.out.println(result);
-        assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode(), "Возвращается не верный Http статус код");
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode(), "Возвращается не верный Http статус код");
     }
 
     @Test
@@ -75,7 +75,7 @@ class FilmControllerTest {
         film.setDescription("Пятеро друзей ( комик-группа «Шарло»), приезжают в город Бризуль. Здесь они хотят разыскать господина Огюста Куглова, который задолжал им деньги, а именно 20 миллионов. о Куглов, который за время «своего отсутствия», стал кандидатом Коломбани.");
         ResponseEntity<Film> result = restTemplate.postForEntity("http://localhost:" + port + "/films", film, Film.class);
         System.out.println(result);
-        assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode(), "Возвращается не верный Http статус код");
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode(), "Возвращается не верный Http статус код");
     }
 
     @Test
@@ -83,7 +83,7 @@ class FilmControllerTest {
         film.setReleaseDate(LocalDate.of(1890, 3, 25));
         ResponseEntity<Film> result = restTemplate.postForEntity("http://localhost:" + port + "/films", film, Film.class);
         System.out.println(result);
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode(), "Возвращается не верный Http статус код");
+        assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode(), "Возвращается не верный Http статус код");
     }
 
     @Test
@@ -91,7 +91,7 @@ class FilmControllerTest {
         film.setDuration(-200L);
         ResponseEntity<Film> result = restTemplate.postForEntity("http://localhost:" + port + "/films", film, Film.class);
         System.out.println(result);
-        assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode(), "Возвращается не верный Http статус код");
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode(), "Возвращается не верный Http статус код");
     }
 
     @Test

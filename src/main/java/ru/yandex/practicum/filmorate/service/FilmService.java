@@ -60,7 +60,7 @@ public class FilmService {                               //сюда я поло�
     public Film likeTheMovie(long filmId, long userId) {
         if(filmDao.getFilms().containsKey(filmId)) {
             if(userDao.getUsers().containsKey(userId)) {
-                filmDao.likeTheMovie(filmDao.getFilms().get(filmId), userId);
+                filmDao.likeMovie(filmDao.getFilms().get(filmId), userId);
                 return filmDao.getFilms().get(filmId);
             } else {
                 throw new UserNotFoundException(String.format("Неверно указан идентификатор пользователя: %s.", userId));

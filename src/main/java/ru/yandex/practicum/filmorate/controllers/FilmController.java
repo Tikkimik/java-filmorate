@@ -23,19 +23,16 @@ public class FilmController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Film>> getAllFilms() {
-        List<Film> films = filmService.getAll();
-        return new ResponseEntity<>(films, HttpStatus.OK);
+    public List<Film> getAllFilms() {
+        return filmService.getAll();
     }
 
     @PostMapping
-    @ResponseBody
     public Film createNewFilm(@Valid @RequestBody Film film) {
         return filmService.addFilm(film);
     }
 
     @PutMapping
-    @ResponseBody
     public Film updateFilm(@Valid @RequestBody Film film) {
         return filmService.updateFilm(film);
     }
@@ -59,6 +56,4 @@ public class FilmController {
     public Film getFilmById(@PathVariable long id) {
         return filmService.getFilmById(id);
     }
-
-
 }

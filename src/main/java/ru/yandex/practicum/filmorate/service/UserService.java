@@ -105,7 +105,7 @@ public class UserService {
     }
 
     public List<User> getFriendsList(long userId) {
-        ArrayList<User> friendListTmp = new ArrayList<>();
+        List<User> friendListTmp = new ArrayList<>();
         if(userDao.getUsers().containsKey(userId)) {
             for (Long friendId : userDao.getFriendList(userDao.getUsers().get(userId))) {
                 friendListTmp.add(userDao.getUsers().get(friendId));
