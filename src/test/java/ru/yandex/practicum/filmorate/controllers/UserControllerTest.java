@@ -74,7 +74,7 @@ class UserControllerTest {
         failLogin.setBirthday(LocalDate.of(2446, 8, 20));
         ResponseEntity<User> result = restTemplate.postForEntity("http://localhost:" + port + "/users", failLogin, User.class);
         System.out.println(result);
-        assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode(), "Возвращается не верный Http статус код");
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode(), "Возвращается не верный Http статус код");
     }
 
     @Test
@@ -86,7 +86,7 @@ class UserControllerTest {
         failEmail.setBirthday(LocalDate.of(1980, 8, 20));
         ResponseEntity<User> result = restTemplate.postForEntity("http://localhost:" + port + "/users", failEmail, User.class);
         System.out.println(result);
-        assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode(), "Возвращается не верный Http статус код");
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode(), "Возвращается не верный Http статус код");
     }
 
     @Test
@@ -98,7 +98,7 @@ class UserControllerTest {
         failBirthday.setBirthday(LocalDate.of(2446, 8, 20));
         ResponseEntity<User> result = restTemplate.postForEntity("http://localhost:" + port + "/users", failBirthday, User.class);
         System.out.println(result);
-        assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode(), "Возвращается не верный Http статус код");
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode(), "Возвращается не верный Http статус код");
     }
 
     RequestCallback requestCallback(final User updatedInstance) {
