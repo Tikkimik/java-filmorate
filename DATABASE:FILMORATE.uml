@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>52cc68ec-e7ac-4c89-90d2-bbf833771431.DATABASE:FILMORATE</OriginalElement>
+  <nodes>
+    <node x="-3.0" y="161.0">52cc68ec-e7ac-4c89-90d2-bbf833771431.TABLE:FILMORATE.PUBLIC.MPAA</node>
+    <node x="429.45608644368855" y="73.0">52cc68ec-e7ac-4c89-90d2-bbf833771431.TABLE:FILMORATE.PUBLIC.LIKES</node>
+    <node x="-13.0" y="60.0">52cc68ec-e7ac-4c89-90d2-bbf833771431.TABLE:FILMORATE.PUBLIC.FILMS_GENRES</node>
+    <node x="-221.6306098964327" y="59.5">52cc68ec-e7ac-4c89-90d2-bbf833771431.TABLE:FILMORATE.PUBLIC.GENRES</node>
+    <node x="193.0" y="73.0">52cc68ec-e7ac-4c89-90d2-bbf833771431.TABLE:FILMORATE.PUBLIC.FILMS</node>
+    <node x="625.1129123145705" y="73.0">52cc68ec-e7ac-4c89-90d2-bbf833771431.TABLE:FILMORATE.PUBLIC.USERS</node>
+    <node x="422.95608644368855" y="179.30730118207936">52cc68ec-e7ac-4c89-90d2-bbf833771431.TABLE:FILMORATE.PUBLIC.FRIENDS</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="52cc68ec-e7ac-4c89-90d2-bbf833771431.TABLE:FILMORATE.PUBLIC.FRIENDS" target="52cc68ec-e7ac-4c89-90d2-bbf833771431.TABLE:FILMORATE.PUBLIC.USERS" relationship="REFERENCES">
+      <point x="73.10339920976338" y="3.9105851359253734" />
+      <point x="591.7844993791296" y="220.71788631800473" />
+      <point x="591.7844993791296" y="114.00516240103781" />
+      <point x="-69.14073309175626" y="-29.994837598962192" />
+    </edge>
+    <edge source="52cc68ec-e7ac-4c89-90d2-bbf833771431.TABLE:FILMORATE.PUBLIC.FILMS_GENRES" target="52cc68ec-e7ac-4c89-90d2-bbf833771431.TABLE:FILMORATE.PUBLIC.GENRES" relationship="REFERENCES">
+      <point x="-79.26467203682404" y="26.209436133486747" />
+      <point x="-42.291139240506396" y="123.70943613348675" />
+      <point x="-42.291139240506396" y="97.5" />
+      <point x="73.0" y="0.0" />
+    </edge>
+    <edge source="52cc68ec-e7ac-4c89-90d2-bbf833771431.TABLE:FILMORATE.PUBLIC.LIKES" target="52cc68ec-e7ac-4c89-90d2-bbf833771431.TABLE:FILMORATE.PUBLIC.FILMS" relationship="REFERENCES">
+      <point x="-61.60625905588648" y="26.728998849252037" />
+      <point x="404.9562715765247" y="137.22899884925204" />
+      <point x="404.9562715765247" y="110.5" />
+      <point x="93.5" y="-44.5" />
+    </edge>
+    <edge source="52cc68ec-e7ac-4c89-90d2-bbf833771431.TABLE:FILMORATE.PUBLIC.LIKES" target="52cc68ec-e7ac-4c89-90d2-bbf833771431.TABLE:FILMORATE.PUBLIC.USERS" relationship="REFERENCES">
+      <point x="61.476594799119255" y="3.574798619102438" />
+      <point x="-69.93627249869019" y="-29.925201380897562" />
+    </edge>
+    <edge source="52cc68ec-e7ac-4c89-90d2-bbf833771431.TABLE:FILMORATE.PUBLIC.FILMS" target="52cc68ec-e7ac-4c89-90d2-bbf833771431.TABLE:FILMORATE.PUBLIC.MPAA" relationship="REFERENCES">
+      <point x="-94.0" y="70.0" />
+      <point x="169.0" y="225.0" />
+      <point x="169.0" y="206.0" />
+      <point x="63.5" y="206.0" />
+      <point x="0.0" y="38.0" />
+    </edge>
+    <edge source="52cc68ec-e7ac-4c89-90d2-bbf833771431.TABLE:FILMORATE.PUBLIC.FILMS_GENRES" target="52cc68ec-e7ac-4c89-90d2-bbf833771431.TABLE:FILMORATE.PUBLIC.FILMS" relationship="REFERENCES">
+      <point x="80.0" y="0.0" />
+      <point x="170.45458333554828" y="97.5" />
+      <point x="170.45458333554828" y="114.15030324326713" />
+      <point x="-91.75214899574053" y="-40.84969675673287" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.8646766169154229" showDependencies="false" x="270.4999999999999" y="166.49999999999994" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Columns</Category>
+    <Category>Comments</Category>
+    <Category>Key columns</Category>
+    <Category>Virtual foreign keys</Category>
+  </Categories>
+</Diagram>
+

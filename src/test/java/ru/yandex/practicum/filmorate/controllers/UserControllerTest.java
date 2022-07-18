@@ -1,24 +1,23 @@
 package ru.yandex.practicum.filmorate.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.List;
+import java.time.LocalDate;
+import org.junit.jupiter.api.Test;
+import org.springframework.http.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import ru.yandex.practicum.filmorate.TestConfig;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.http.*;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import ru.yandex.practicum.filmorate.model.user.User;
 import org.springframework.web.client.RequestCallback;
 import ru.yandex.practicum.filmorate.FilmorateApplication;
-import ru.yandex.practicum.filmorate.TestConfig;
-import ru.yandex.practicum.filmorate.model.User;
-
-import java.time.LocalDate;
-import java.util.List;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
