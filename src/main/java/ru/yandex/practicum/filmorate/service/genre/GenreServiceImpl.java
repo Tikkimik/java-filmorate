@@ -1,6 +1,5 @@
 package ru.yandex.practicum.filmorate.service.genre;
 
-import java.util.Optional;
 import java.util.Collection;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.model.film.Genre;
@@ -23,13 +22,12 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public Optional<Genre> findById(Integer id) {
+    public Genre findById(Integer id) {
         return genreDao.findById(id);
     }
 
     @Override
-    public Optional<Genre> update(Genre genre) {
-        return genreDao.update(genre);
+    public void update(Genre genre) {
+        genreDao.update(genre);
     }
-
 }

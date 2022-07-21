@@ -1,12 +1,11 @@
 package ru.yandex.practicum.filmorate.dao.implementation;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.*;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import org.springframework.stereotype.Component;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 import ru.yandex.practicum.filmorate.model.film.Mpa;
 import ru.yandex.practicum.filmorate.model.film.Film;
 import ru.yandex.practicum.filmorate.model.film.Genre;
@@ -15,8 +14,8 @@ import ru.yandex.practicum.filmorate.dao.interfaces.FilmDao;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.yandex.practicum.filmorate.dao.interfaces.FilmGenreDao;
-import ru.yandex.practicum.filmorate.model.user.User;
 
+@Repository
 @Component("FilmDaoImpl")
 public class FilmDaoImpl implements FilmDao {
 
@@ -219,25 +218,5 @@ public class FilmDaoImpl implements FilmDao {
                 return film;
             }, count
         );
-    }
-
-
-    private User makeUser(ResultSet rs) throws SQLException {
-        return new User(
-                rs.getInt("USER_ID"),
-                rs.getString("email"),
-                rs.getString("login"),
-                rs.getString("name"),
-                rs.getDate("birthday"),
-                getFriendsByUser(rs.getInt("USER_ID")));
-    }
-
-    private Collection<Integer> getFriendsByUser(Integer id) {
-        String sql = "SELECT friend_id FROM FRIENDS WHERE USER_ID = ?";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> makeFriends(rs), id);
-    }
-
-    private Integer makeFriends(ResultSet rs) throws SQLException {
-        return rs.getInt("FRIEND_ID");
     }
 }

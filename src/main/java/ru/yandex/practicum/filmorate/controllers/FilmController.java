@@ -10,45 +10,45 @@ import ru.yandex.practicum.filmorate.service.film.FilmService;
 @RestController
 @RequestMapping("/films")
 public class FilmController {
-    private final FilmService service;
+    private final FilmService filmService;
 
     @Autowired
-    public FilmController(FilmService service) {
-        this.service = service;
+    public FilmController(FilmService filmService) {
+        this.filmService = filmService;
     }
 
     @GetMapping
     public List<Film> getAllFilms() {
-        return service.getAll();
+        return filmService.getAll();
     }
 
     @GetMapping("/{id}")
     public Film getFilmById(@PathVariable long id) {
-        return service.getFilmById(id);
+        return filmService.getFilmById(id);
     }
 
     @GetMapping("/popular")
     public List<Film> getMostPopularMovies(@RequestParam(defaultValue = "10") int count) {
-        return service.getMostPopularMovies(count);
+        return filmService.getMostPopularMovies(count);
     }
 
     @PostMapping
     public Film createNewFilm(@Valid @RequestBody Film film) {
-        return service.addFilm(film);
+        return filmService.addFilm(film);
     }
 
     @PutMapping
     public Film updateFilm(@Valid @RequestBody Film film) {
-        return service.updateFilm(film);
+        return filmService.updateFilm(film);
     }
 
     @PutMapping("/{id}/like/{userId}")
     public void likeFilm(@PathVariable long id, @PathVariable long userId) {
-        service.likeFilm(id, userId);
+        filmService.likeFilm(id, userId);
     }
 
     @DeleteMapping("/{id}/like/{userId}")
     public void removeLikeFromMovie(@PathVariable long id, @PathVariable long userId) {
-        service.removeLikeFromMovie(id, userId);
+        filmService.removeLikeFromMovie(id, userId);
     }
 }

@@ -10,50 +10,50 @@ import org.springframework.beans.factory.annotation.Autowired;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    private final UserService service;
+    private final UserService userService;
 
     @Autowired
-    public UserController(UserService service) {
-        this.service = service;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping
     public List<User> getAllUsers() {
-        return service.getAllUsers();
+        return userService.getAllUsers();
     }
 
     @GetMapping("/{id}")
     public User getUserById(@PathVariable long id) {
-        return service.getUserById(id);
+        return userService.getUserById(id);
     }
 
     @GetMapping("/{id}/friends")
     public List<User> getFriendsList(@PathVariable long id) {
-        return service.getFriendsList(id);
+        return userService.getFriendsList(id);
     }
 
     @GetMapping("/{id}/friends/common/{otherId}")
     public List<User> getListOfMutualFriends(@PathVariable long id, @PathVariable long otherId) {
-        return service.getListOfMutualFriends(id, otherId);
+        return userService.getListOfMutualFriends(id, otherId);
     }
 
     @PostMapping
     public User createNewUser(@Valid @RequestBody User user) {
-        return service.addUser(user);
+        return userService.addUser(user);
     }
 
     @PutMapping
     public User updateUser(@RequestBody User user) {
-        return service.updateUser(user);
+        return userService.updateUser(user);
     }
 
     @PutMapping("/{id}/friends/{friendId}")
     public boolean addToFriendList(@PathVariable long id, @PathVariable long friendId) {
-        return service.addToFriendList(id, friendId);
+        return userService.addToFriendList(id, friendId);
     }
 
     @DeleteMapping("/{id}/friends/{friendId}")
     public void deleteFriend(@PathVariable long id, @PathVariable long friendId) {
-        service.removeFromFriendList(id, friendId);
+        userService.removeFromFriendList(id, friendId);
     }
 }

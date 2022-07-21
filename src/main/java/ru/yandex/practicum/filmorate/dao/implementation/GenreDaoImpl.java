@@ -8,7 +8,6 @@ import ru.yandex.practicum.filmorate.model.film.Genre;
 import ru.yandex.practicum.filmorate.dao.interfaces.GenreDao;
 
 import java.util.Collection;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
@@ -29,13 +28,13 @@ public class GenreDaoImpl implements GenreDao {
     }
 
     @Override
-    public Optional<Genre> findById(Integer id) {
+    public Genre findById(Integer id) {
         SqlRowSet rs = jdbcTemplate.queryForRowSet("SELECT * FROM GENRES WHERE genre_id =  ?", id);
         if (rs.next()) {
-            return Optional.of(new Genre(rs.getInt(1),
-                    rs.getString(2)));
+            return new Genre(rs.getInt(1),
+                    rs.getString(2));
         }
-        return Optional.empty();
+        return null;
     }
 
     @Override
@@ -45,20 +44,20 @@ public class GenreDaoImpl implements GenreDao {
     }
 
     @Override
-    public Optional<Genre> create(Genre genre) {
+    public Genre create(Genre genre) {
         if (jdbcTemplate.update("INSERT INTO GENRES (NAME) VALUES ( ? )", genre.getName()) != 1) {
-            return Optional.empty();
+            return null;
         } else {
-            return Optional.of(genre);
+            return genre;
         }
     }
 
     @Override
-    public Optional<Genre> update(Genre genre) {
+    public Genre update(Genre genre) {
         if (jdbcTemplate.update("UPDATE GENRES SET NAME = ? WHERE genre_id = ?", (genre.getId())) != 1) {
-            return Optional.empty();
+            return null;
         } else {
-            return Optional.of(genre);
+            return genre;
         }
     }
 }

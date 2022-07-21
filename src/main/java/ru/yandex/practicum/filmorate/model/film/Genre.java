@@ -1,11 +1,12 @@
 package ru.yandex.practicum.filmorate.model.film;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.AllArgsConstructor;
+import javax.validation.constraints.NotBlank;
 
 @Data
 @AllArgsConstructor
 public class Genre {
-    private int id;
-    private String name;
+    @NotBlank private int id;
+    @NotBlank private String name;
 }
