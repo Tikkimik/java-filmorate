@@ -1,9 +1,10 @@
 package ru.yandex.practicum.filmorate.model.user;
 
 import lombok.*;
-import java.util.Set;
+
+import java.sql.Date;
 import java.time.LocalDate;
-import java.util.TreeSet;
+import java.util.*;
 import javax.validation.constraints.*;
 
 @Data
@@ -35,5 +36,21 @@ public class User {
         this.birthday = birthday;
         this.name = name.isEmpty() || name.isBlank() ? login : name;
         this.friendList = friendList;
+    }
+
+    public User(long id, String email, String login, String name, Date birthday, Collection<Integer> friendList) {
+        this.id = id;
+        this.email = email;
+        this.login = login;
+        this.birthday = birthday.toLocalDate();
+        this.name = name.isEmpty() || name.isBlank() ? login : name;
+        this.friendList = convertArrayToSet(friendList);
+    }
+
+    public static Set<Long> convertArrayToSet(Collection<Integer> array){
+        Set<Long> set = new TreeSet<>();
+        for (Integer i : array)
+            set.add(Long.valueOf(i));
+        return set;
     }
 }

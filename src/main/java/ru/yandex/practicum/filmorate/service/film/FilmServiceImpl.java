@@ -56,39 +56,25 @@ public class FilmServiceImpl implements FilmService {
         }
     }
 
-    public Film likeFilm(long filmId, long userId) {
-        if(dao.getFilms().containsKey(filmId)) {
-            if(userDao.getUsers().containsKey(userId)) {
-                dao.getFilms().get(filmId).getNumberOfLikes().add(userId);
-                return dao.getFilms().get(filmId);
-            } else {
-                throw new UserNotFoundException(String.format("Неверно указан идентификатор пользователя: %s.", userId));
-            }
-        } else {
-            throw new FilmNotFoundException(String.format("Неверно указан идентификатор фильма: %s.", filmId));
-        }
+    @Override
+    public void likeFilm(long filmId, long userId) {
+        dao.likeFilm(filmId, userId);
     }
 
     @Override
-    public Film removeLikeFromMovie(long filmId, long userId) {
-        if(dao.getFilms().containsKey(filmId)) {
-            if(userDao.getUsers().containsKey(userId)) {
-                if(dao.getFilms().get(filmId).getNumberOfLikes().contains(userId)) {
-                    dao.removeLikeFromMovie(dao.getFilms().get(filmId), userId);
-                    return dao.getFilms().get(filmId);
-                } else {
-                    throw new NotFoundException(String.format("Пользователь с идентификатором: %s не лайкал фильм %b", userId, filmId));
-                }
-            } else {
-                throw new UserNotFoundException(String.format("Неверно указан идентификатор пользователя: %s.", userId));
-            }
-        } else {
-            throw new FilmNotFoundException(String.format("Неверно указан идентификатор фильма: %s.", filmId));
-        }
+    public void removeLikeFromMovie(long filmId, long userId) {
+        if (checkID(filmId) || checkID(userId))
+            throw new FilmNotFoundException("неверный id");
+
+        dao.removeLikeFromMovie(filmId, userId);
     }
 
     @Override
     public List<Film> getMostPopularMovies(int count) {
         return dao.getMostPopular(count);
+    }
+
+    private boolean checkID(long id) {
+        return (id <= 0);
     }
 }

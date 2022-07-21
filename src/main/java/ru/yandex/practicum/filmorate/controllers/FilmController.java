@@ -43,12 +43,12 @@ public class FilmController {
     }
 
     @PutMapping("/{id}/like/{userId}")
-    public Film likeFilm(@PathVariable long id, @PathVariable long userId) {
-        return service.likeFilm(id, userId);
+    public void likeFilm(@PathVariable long id, @PathVariable long userId) {
+        service.likeFilm(id, userId);
     }
 
     @DeleteMapping("/{id}/like/{userId}")
-    public Film removeLikeFromMovie(@PathVariable long id, @PathVariable long userId) {
-        return service.removeLikeFromMovie(id, userId);
+    public void removeLikeFromMovie(@PathVariable long id, @PathVariable long userId) {
+        service.removeLikeFromMovie(id, userId);
     }
 }

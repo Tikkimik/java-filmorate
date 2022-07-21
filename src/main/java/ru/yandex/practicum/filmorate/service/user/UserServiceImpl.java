@@ -89,17 +89,21 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
-    public boolean removeFromFriendList(long userId, long friendId) {
+    public void removeFromFriendList(long userId, long friendId) {
         if(dao.getUsers().containsKey(userId)) {
             if (dao.getUsers().containsKey(friendId)) {
-                dao.getUsers().get(userId).getFriendList().remove(friendId);
-                dao.getUsers().get(friendId).getFriendList().remove(userId);
+//                dao.getUsers().get(userId).getFriendList().remove(friendId);
+//                dao.getUsers().get(friendId).getFriendList().remove(userId);
+                dao.deleteFriend(userId, friendId);
             } else {
                 throw new IncorrectParameterException(String.format("неверно указан %s друга", friendId));
             }
         } else {
             throw new IncorrectParameterException(String.format("неверно указан %s пользователя", userId));
         }
-        return true;
     }
+
+//    private boolean checkID(Integer id) {
+//        return (id == null || id < 0);
+//    }
 }

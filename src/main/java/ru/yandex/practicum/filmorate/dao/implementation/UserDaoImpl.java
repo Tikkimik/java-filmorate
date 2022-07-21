@@ -10,6 +10,7 @@ import ru.yandex.practicum.filmorate.dao.interfaces.UserDao;
 
 import java.lang.reflect.Field;
 import java.sql.PreparedStatement;
+import java.time.LocalDate;
 import java.util.*;
 
 @Component("UserDaoImpl")
@@ -31,8 +32,8 @@ public class UserDaoImpl implements UserDao {
                     sqlRowSet.getString("EMAIL"),
                     sqlRowSet.getString("LOGIN"),
                     Objects.requireNonNull(sqlRowSet.getString("NAME")),
-                    Objects.requireNonNull(sqlRowSet.getDate("BIRTHDAY")).toLocalDate()
-            ));
+                    sqlRowSet.getDate("BIRTHDAY").toLocalDate())
+            );
         }
         return users;
     }
@@ -46,7 +47,7 @@ public class UserDaoImpl implements UserDao {
                     sqlRowSet.getString("EMAIL"),
                     sqlRowSet.getString("LOGIN"),
                     Objects.requireNonNull(sqlRowSet.getString("NAME")),
-                    Objects.requireNonNull(sqlRowSet.getDate("BIRTHDAY")).toLocalDate()
+                    sqlRowSet.getDate("BIRTHDAY").toLocalDate()
             ));
         }
         return users;
@@ -68,7 +69,7 @@ public class UserDaoImpl implements UserDao {
                     sqlRowSet.getString("EMAIL"),
                     sqlRowSet.getString("LOGIN"),
                     Objects.requireNonNull(sqlRowSet.getString("NAME")),
-                    Objects.requireNonNull(sqlRowSet.getDate("BIRTHDAY")).toLocalDate(),
+                    sqlRowSet.getDate("BIRTHDAY").toLocalDate(),
                     friend);
         }
         return null;
@@ -84,7 +85,7 @@ public class UserDaoImpl implements UserDao {
                     sqlRowSet.getString("EMAIL"),
                     sqlRowSet.getString("LOGIN"),
                     Objects.requireNonNull(sqlRowSet.getString("NAME")),
-                    Objects.requireNonNull(sqlRowSet.getDate("BIRTHDAY")).toLocalDate()
+                    sqlRowSet.getDate("BIRTHDAY").toLocalDate()
             ));
         }
         return friends;
@@ -137,6 +138,12 @@ public class UserDaoImpl implements UserDao {
         removeFromFriendList(user);
         insertFriends(user);
         return user;
+    }
+
+    @Override
+    public void deleteFriend(long userId, long friendId){
+        String row = "DELETE FROM FRIENDS WHERE USER_ID = ? AND FRIEND_ID = ?";
+        jdbcTemplate.update(row, userId, friendId);
     }
 
     private void removeFromFriendList(User user) {

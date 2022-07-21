@@ -19,5 +19,5 @@ public interface UserService {
 
     User updateUser(User user);
 
-    boolean removeFromFriendList(long id, long userId);
+    void removeFromFriendList(long id, long userId);
 }

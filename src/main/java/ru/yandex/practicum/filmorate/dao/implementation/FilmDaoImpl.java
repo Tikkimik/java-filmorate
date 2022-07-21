@@ -1,5 +1,7 @@
 package ru.yandex.practicum.filmorate.dao.implementation;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -13,6 +15,7 @@ import ru.yandex.practicum.filmorate.dao.interfaces.FilmDao;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.yandex.practicum.filmorate.dao.interfaces.FilmGenreDao;
+import ru.yandex.practicum.filmorate.model.user.User;
 
 @Component("FilmDaoImpl")
 public class FilmDaoImpl implements FilmDao {
@@ -54,6 +57,12 @@ public class FilmDaoImpl implements FilmDao {
             } while (sqlRowSet.next());
         }
         return films;
+    }
+
+    @Override
+    public void likeFilm(long filmId, long userId) {
+        String sqlQuery = "INSERT INTO LIKES(FILM_ID, USER_ID) values (?, ?)";
+        jdbcTemplate.update(sqlQuery, filmId, userId);
     }
 
     @Override
@@ -175,8 +184,9 @@ public class FilmDaoImpl implements FilmDao {
     }
 
     @Override
-    public void removeLikeFromMovie(Film film, long userId) {
-        jdbcTemplate.update("DELETE FROM LIKES WHERE FILM_ID = ?", userId);
+    public void removeLikeFromMovie(long filmId, long userId) {
+        String row = "DELETE FROM LIKES WHERE FILM_ID = ? AND USER_ID = ?";
+        jdbcTemplate.update(row, filmId, userId);
     }
 
     @Override
@@ -209,5 +219,25 @@ public class FilmDaoImpl implements FilmDao {
                 return film;
             }, count
         );
+    }
+
+
+    private User makeUser(ResultSet rs) throws SQLException {
+        return new User(
+                rs.getInt("USER_ID"),
+                rs.getString("email"),
+                rs.getString("login"),
+                rs.getString("name"),
+                rs.getDate("birthday"),
+                getFriendsByUser(rs.getInt("USER_ID")));
+    }
+
+    private Collection<Integer> getFriendsByUser(Integer id) {
+        String sql = "SELECT friend_id FROM FRIENDS WHERE USER_ID = ?";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> makeFriends(rs), id);
+    }
+
+    private Integer makeFriends(ResultSet rs) throws SQLException {
+        return rs.getInt("FRIEND_ID");
     }
 }
