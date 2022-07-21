@@ -6,7 +6,7 @@ import ru.yandex.practicum.filmorate.model.film.Mpa;
 
 public interface MpaService {
 
-    Optional<Mpa> getById(int id);
+    Mpa getById(int id);
 
     List<Mpa> getAll();
 

@@ -31,8 +31,7 @@ public class GenreDaoImpl implements GenreDao {
     public Genre findById(Integer id) {
         SqlRowSet rs = jdbcTemplate.queryForRowSet("SELECT * FROM GENRES WHERE genre_id =  ?", id);
         if (rs.next()) {
-            return new Genre(rs.getInt(1),
-                    rs.getString(2));
+            return new Genre(rs.getInt(1), rs.getString(2));
         }
         return null;
     }

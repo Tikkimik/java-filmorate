@@ -24,7 +24,7 @@ public class MpaController {
     }
 
     @GetMapping("{id}")
-    public Optional<Mpa> getMpaById(@PathVariable Integer id) {
+    public Mpa getMpaById(@PathVariable Integer id) {
         if (id < 1) {
             throw new UnableToFindException();
         }

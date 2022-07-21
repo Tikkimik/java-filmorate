@@ -2,7 +2,9 @@ package ru.yandex.practicum.filmorate.dao.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
+import ru.yandex.practicum.filmorate.model.film.Genre;
 import ru.yandex.practicum.filmorate.model.film.Mpa;
 import ru.yandex.practicum.filmorate.dao.interfaces.MpaDao;
 
@@ -20,10 +22,12 @@ public class MpaDaoImpl implements MpaDao {
     }
 
     @Override
-    public Optional<Mpa> getById(int id) {
-        final String sql = "SELECT * FROM MPAA where MPAA_ID = ?";
-        return jdbcTemplate.queryForStream(sql, (rs, rowNum) ->
-                new Mpa(rs.getInt(1), rs.getString(2)), id).findFirst();
+    public Mpa getById(int id) {
+        SqlRowSet rs = jdbcTemplate.queryForRowSet("SELECT * FROM MPAA where MPAA_ID = ?", id);
+        if (rs.next()) {
+            return new Mpa(rs.getInt(1), rs.getString(2));
+        }
+        return null;
     }
 
     @Override

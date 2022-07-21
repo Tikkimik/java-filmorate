@@ -18,7 +18,7 @@ public class MpaServiceImpl implements MpaService {
     }
 
     @Override
-    public Optional<Mpa> getById(int id) {
+    public Mpa getById(int id) {
         return mpaDao.getById(id);
     }
 
